@@ -1,0 +1,39 @@
+export const User =[
+    {
+        fullname:"WillSmith",
+        image:'c1.jpg',
+    },
+    {
+        fullname:"WillSmith",
+        image:'c2.jpg',
+    },
+    {
+        fullname:"WillSmith",
+        image:'c3.jpg',
+    },
+    {
+        fullname:"WillSmith",
+        image:'c6.jpg',
+    },
+    {
+        fullname:"WillSmith",
+        image:'c1.jpg',
+    },
+    {
+        fullname:"WillSmith",
+        image:'c1.jpg',
+    },
+    {
+        fullname:"WillSmith",
+        image:'c1.jpg',
+    },
+    {
+        fullname:"WillSmith",
+        image:'c1.jpg',
+    },
+    {
+        fullname:"WillSmith",
+        image:'c1.jpg',
+    },
+
+]
