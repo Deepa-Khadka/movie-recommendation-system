@@ -1,14 +1,31 @@
 import React from 'react'
 import { BsFillGridFill } from 'react-icons/bs';
 import { FaListAlt, FaUsers,FaHeart } from 'react-icons/fa';
-import { RiMovie2Fill } from 'react-icons/ri';
+import { RiLockPasswordFill, RiLogoutCircleLine, RiMovie2Fill } from 'react-icons/ri';
 import {HiViewGridAdd } from 'react-icons/hi';
 import { FiSettings } from 'react-icons/fi';
 import Layout from '../../../Layout/Layout';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutAction } from '../../../Redux/Actions/userActions';
+import { toast } from 'react-hot-toast';
 
 function Sidebar({children}) {
-    const SideLinks =[
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { userInfo} = useSelector(
+        (state) => state.userLogin
+        );
+
+    //logout function 
+
+const logoutHandler = () =>{
+    dispatch(logoutAction())
+    navigate("/login")
+    toast.success("Logged out sucessfully")
+}
+  const SideLinks = userInfo?.isAdmin ? (
+        [      
         {
             name:"Dashboard",
             link:"/dashboard",
@@ -44,22 +61,51 @@ function Sidebar({children}) {
         },
         {
             name:"Favourites Movies",
-            link:"/favourites",
+            link:"/favorites",
             icon:FaHeart,
         },
         {
-            name:"Categories",
-            link:"/categories",
-            icon:HiViewGridAdd,
+            name:"Change Password",
+            link:"/password",
+            icon:RiLockPasswordFill,
 
         },
+    ]
+
+    ): userInfo ? (
+        [
+            {
+                name:"Update Profile",
+                link:"/profile",
+                icon:FiSettings,
+    
+            },
+            {
+                name:"Favourites Movies",
+                link:"/favorites",
+                icon:FaHeart,
+            },
+            {
+                name:"Change Password",
+                link:"/password",
+                icon:RiLockPasswordFill,
+    
+            },
+
+        ]
+
+    ) :(
+        [
+
+        ]
+    )
 
 
-    ];
+   
     const active = "bg-dryGray text-subMain";
     const hover = "hover:text-white hover:bg-main";
     const inActive = "rounded font-medium text-sm transition flex gap-3 items-center p-4"
-const Hover = ({isActive}) => 
+    const Hover = ({isActive}) => 
 isActive ? `${active} ${inActive}` : `${inActive} ${hover}`;
 
 
@@ -71,12 +117,17 @@ isActive ? `${active} ${inActive}` : `${inActive} ${hover}`;
         <div className='xl:grid grid-cols-8 gap-10 items-start md:py-12 py-6'>
         <div className='col-span-2 sticky bg-dry border-gray-800 p-6 rounded-md xl:mb-0 mb-5'>
          {
+            //Sidebar Links
             SideLinks.map((link,index) => (
                 <NavLink to={link.link} key={index} className={Hover}>
                     <link.icon/><p>{link.name}</p>
                 </NavLink>
             ))
-         }   
+         } 
+         <button onClick={logoutHandler} className={`${inActive} ${hover} w-full `} >
+            <RiLogoutCircleLine/> Logout
+
+         </button>
 
         </div>
        
@@ -85,7 +136,7 @@ isActive ? `${active} ${inActive}` : `${inActive} ${hover}`;
         data-aos-delay="10"
         data-aos-offset='100'
          className='col-span-6 rounded-md bg-dry border border-gray-800 p-6'>
-{children}
+            {children}
         </div>
         </div>
     </div>

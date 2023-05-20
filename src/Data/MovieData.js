@@ -1,3 +1,12 @@
+/**
+ * axios
+  .get("http://localhost:8000/movie")
+  .then(function (response) {
+    console.log(response);
+  });
+
+ */
+
 export const Movies = [
     {
         name: 'Army Of the Dead',
@@ -8,8 +17,8 @@ export const Movies = [
         language:'English',
         year:'2022',
         time:'2hr',
-        video:3.4,
-        rate:4,
+        video:'',
+        rate:3.4,
         reviews:23,
     },
     {
@@ -75,7 +84,7 @@ export const Movies = [
         year:'2022',
         time:'3hr',
         rate:'4',
-        video:3.4,
+        video:'',
         reviews:23,
     },
     {
@@ -87,7 +96,7 @@ export const Movies = [
         language:'English',
         year:'2022',
         time:'2hr',
-        video:3.4,
+        video:'',
         rate:4,
         reviews:23,
     },
@@ -100,7 +109,7 @@ export const Movies = [
         language:'English',
         year:'2022',
         time:'2hr',
-        video:3.4,
+        video:'',
         rate:3,
         reviews:23,
     },

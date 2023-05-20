@@ -23,3 +23,20 @@ export const Select = ({label, option, onChange}) => {
         </>
     );
 };
+export const Input = ({label, placeholder, type, bg,register,name,value,onChange}) => {
+    return(
+       
+        <div className="text-sm w-full">
+         <label className="text-white font-semibold">{label}</label>
+      <input required 
+      name={name}
+      value ={value}
+      onChange={onChange}
+      {...register}
+      type={type} placeholder={placeholder}
+                className={`w-full text-sm mt-2 p-3 border border-border rounded text-white ${
+                    bg ? 'bg-main' : 'bg-dry'}`} />
+       
+        </div>
+    );
+};
