@@ -90,7 +90,7 @@ export const MoviesData = [
         name: 'Scarlet heart',
         desc: 'lorememmr mmemrnernner',
         titleImage:'g.jpg',
-        image:'g.png',
+        image:'g.jpg',
         category:'Western',
         language:'English',
         year:'2022',
@@ -100,7 +100,7 @@ export const MoviesData = [
        
     },
     {
-        name: 'The last dance',
+        name: 'Squid Game',
         desc: 'lorememmr mmemrnernner',
         titleImage:'h.jpg',
         image:'h.jpg',
@@ -115,8 +115,8 @@ export const MoviesData = [
     {
         name: 'Titanic',
         desc: 'lorememmr mmemrnernner',
-        titleImage:'h.jpg',
-        image:'h.jpg',
+        titleImage:'p.jpg',
+        image:'p.jpg',
         category:'Drama',
         language:'swahil',
         year:'2012',
@@ -128,9 +128,9 @@ export const MoviesData = [
     {
         name: 'About time of the dead',
         desc: 'lorememmr mmemrnernner',
-        titleImage:'h.jpg',
-        image:'h.jpg',
-        category:'comedy',
+        titleImage:'p.jpg',
+        image:'p.jpg',
+        category:'Comedy',
         language:'French',
         year:'2000',
         time:2,
@@ -139,17 +139,18 @@ export const MoviesData = [
         
     },
     {
-        name: 'Game of Thrones',
-        desc: 'lorememmr mmemrnernner',
-        titleImage:'h.jpg',
-        image:'h.jpg',
-        category:'Action',
-        language:'Chinese',
-        year:'2012',
+        name: "Game of Thrones",
+        desc: "lorememmr mmemrnernner",
+        titleImage:"i.png",
+        image:"q.jpg",
+        category:"Action",
+        language:"Chinese",
+        year:"2012",
         time:7,
         video:'',
         rate:3,
         
     },
+    
 
 ]

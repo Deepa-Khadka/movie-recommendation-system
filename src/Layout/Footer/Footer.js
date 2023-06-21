@@ -48,10 +48,7 @@ function Footer() {
 {
   title:'My Account',
   links:[
-    {
-      name:'Dashboard',
-      link:'/dashboard'
-    },
+   
     {
       name:'My Favourite',
       link:'/favourite'

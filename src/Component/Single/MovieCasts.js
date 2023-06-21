@@ -3,25 +3,25 @@ import { FaUserFriends } from 'react-icons/fa'
 import Titles from '../Titles'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import {Autoplay} from "swiper"
-import { User } from '../../Data/UsersData'
 
 
-function MovieCasts() {
+function MovieCasts({movie}) {
   return (
-    <div className='my-12 '>
+    movie?.casts?.length > 0 &&(
+      <div className='my-12 '>
       <Titles title="Casts" Icon={FaUserFriends}/>
-      <div className='mt-10 '>
+      <div className='mt-10'>
         <Swiper autoplay={{
           delay:1000,
           disableOnInteraction:false
         }}
-          loop={true} 
+         // loop={true} 
           speed={1000} 
           modules={[Autoplay]}
           spaceBetween={10}
           breakpoints={{
             0:{
-            slidesPerView:1,
+              slidesPerView:1,
            
           },
           400:{
@@ -44,13 +44,19 @@ function MovieCasts() {
           
           }}>
             {
-              User.map((user,i) =>(
-                <SwiperSlide key={i}>
-                  <div className='w-full p-3 italic tect-xs text-text rounded flex-col bg-dry border-gray-800 '>
-                  <img src={`${window.location.origin}/images/movies/`+ user.image}
-             alt={user.fullname}
-              className='w-full h-64 object-cover rounded mb-2 '/>
-                  </div>
+              movie?.casts?.map((cast) =>(
+                <SwiperSlide key={cast?._id}>
+              <div className='w-full p-3 italic text-xs text-text rounded flex-col bg-dry border-gray-800'>
+              <img
+                src={cast?.image ? `/images/movies/${cast?.image}` : "/images/movies/user.png"}
+                alt={cast?.name}
+                className='w-full h-64 object-cover rounded mb-4 '
+              />
+              <div>
+                <p>{cast?.name}</p>
+              </div>
+        </div>
+
                 </SwiperSlide>
               ))}
           </Swiper>
@@ -58,7 +64,12 @@ function MovieCasts() {
           
       </div>
     </div>
-  )
+
+    )
+    
+
+    
+  );
 }
 
-export default MovieCasts
+export default MovieCasts;

@@ -77,7 +77,7 @@ export const Movies = [
     {
         name: 'Legend of the seeker',
         desc: 'lorememmr mmemrnernner',
-        titleImage:'1.jpg',
+        titleImage:'f.jpg',
         image:'f.jpg',
         category:'Horror',
         language:'Swahili',
@@ -90,7 +90,7 @@ export const Movies = [
     {
         name: 'Scarlet heart',
         desc: 'lorememmr mmemrnernner',
-        titleImage:'g.jpg',
+        titleImage:'g.png',
         image:'g.png',
         category:'Western',
         language:'English',
@@ -101,7 +101,7 @@ export const Movies = [
         reviews:23,
     },
     {
-        name: 'The last dance',
+        name: 'quid Game',
         desc: 'lorememmr mmemrnernner',
         titleImage:'h.jpg',
         image:'h.jpg',
@@ -113,4 +113,44 @@ export const Movies = [
         rate:3,
         reviews:23,
     },
+        {
+        name: "Game of Thrones",
+        desc: "lorememmr mmemrnernner",
+        titleImage:"i.png",
+        image:"q.jpg",
+        category:"Action",
+        language:"Chinese",
+        year:"2012",
+        time:7,
+        video:'',
+        rate:3,
+        
+    },
+    {
+        name: 'Titanic',
+        desc: 'lorememmr mmemrnernner',
+        titleImage:'p.jpg',
+        image:'p.jpg',
+        category:'Drama',
+        language:'swahil',
+        year:'2012',
+        time:4,
+        video:'',
+        rate:1,
+       
+    },
+    {
+        name: 'About time of the dead',
+        desc: 'lorememmr mmemrnernner',
+        titleImage:'h.jpg',
+        image:'h.jpg',
+        category:'Comedy',
+        language:'French',
+        year:'2000',
+        time:2,
+        video:'',
+        rate:3,
+        
+    },
+    
 ]

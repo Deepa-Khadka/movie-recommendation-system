@@ -8,11 +8,13 @@ import { MoviesData } from "../../Data/MovieData.js";
 //@access public 
 
 const importMovies = asyncHandler(async (req, res) => {
-  // First, we make sure our movies table is empty by deleting all documents
-  await Movie.deleteMany({});
+  const movies = await Movie.find();
 
-  // Then, we insert all movies from the database
-  const movies = await Movie.insertMany(MoviesData);
+  // const filePath = path.join(__dirname, '../../Data/MovieData.json');
+  // const jsonData = JSON.stringify(movies, null, 2);
+  // fs.writeFileSync(filePath, jsonData);
+
+  // module.exports = jsonData;
 
   res.status(200).json(movies);
 });
@@ -23,7 +25,7 @@ const importMovies = asyncHandler(async (req, res) => {
 const getMovies = asyncHandler(async (req, res) => {
   try {
     // Filter movies by category, time, language, rate, year, and search
-    const { category, time, language, rate, year, search, each } = req.query;
+    const { category, time, language, rate, year, search } = req.query;
     let query = {
       ...(category && { category }),
       ...(time && { time }),
@@ -42,8 +44,6 @@ const getMovies = asyncHandler(async (req, res) => {
     const movies = await Movie.find(query)
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit);
-
     // Get total number of movies
     const count = await Movie.countDocuments(query);
 
@@ -306,7 +306,7 @@ const  createMovie =asyncHandler(async (req,res) => {
       year,
       video,
       casts,
-      userId:req.user._id,
+      //userId:req.user._id,
 
     });
     //save the movie in database

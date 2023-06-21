@@ -102,4 +102,4 @@ function Table({data,admin}) {
 
 }
 
-export default Table
+export default Table;

@@ -1,0 +1,52 @@
+export const cast =[
+    {
+        fullName:"WillSmith",
+        image:'c1.jpg',
+       
+    },
+    {
+        fullName:"WillSmith",
+        image:'c2.jpg',
+    },
+    {
+        fullName:"WillSmith",
+        image:'c3.jpg',
+    },
+    {
+        fullName:"WillSmith",
+        image:'c6.jpg',
+    },
+    {
+        fullName:"WillSmith",
+        image:'c1.jpg',
+    },
+    {
+        fullName:"WillSmith",
+        image:'c1.jpg',
+    },
+    {
+        fullName:"WillSmith",
+        image:'c1.jpg',
+       
+    },
+    {
+        fullName:"WillSmith",
+        image:'c2.jpg',
+    },
+    {
+        fullName:"WillSmith",
+        image:'c3.jpg',
+    },
+    {
+        fullName:"WillSmith",
+        image:'c6.jpg',
+    },
+    {
+        fullName:"WillSmith",
+        image:'c1.jpg',
+    },
+    {
+        fullName:"WillSmith",
+        image:'c1.jpg',
+    },
+]

@@ -3,6 +3,7 @@ import User from "../models/UserModels.js";
 import asyncHandler from "express-async-handler";
 
 
+
 //@desc Authenticated user & get token
 const generateToken = (id) => {
     // return jwt.sign(id, 'secretOrPrivateKey', process.env.JWT_ACCESS_TOEKN_PRIVATE_KEY, {

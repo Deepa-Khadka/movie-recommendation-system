@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import { userSchema } from '../models/User.js'
 
 export default userSchema.methods.generateAuthToken = function (user) {
-  const user = {
+   user = {
     _id: this._id,
     user_type: this.user_type
   }

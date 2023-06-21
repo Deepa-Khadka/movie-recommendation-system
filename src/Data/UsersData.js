@@ -1,39 +1,30 @@
 export const User =[
     {
-        fullname:"WillSmith",
+        fullName:"WillSmith",
         image:'c1.jpg',
+        email:"willsmith@gmail.com",
+        rate:4.5,
+        message:"wownnnnnnnnnnnnnnnnnnnnnn "
     },
     {
-        fullname:"WillSmith",
+        fullName:"WillSmith",
         image:'c2.jpg',
     },
     {
-        fullname:"WillSmith",
+        fullName:"WillSmith",
         image:'c3.jpg',
     },
     {
-        fullname:"WillSmith",
+        fullName:"WillSmith",
         image:'c6.jpg',
     },
     {
-        fullname:"WillSmith",
+        fullName:"WillSmith",
         image:'c1.jpg',
     },
     {
-        fullname:"WillSmith",
+        fullName:"WillSmith",
         image:'c1.jpg',
     },
-    {
-        fullname:"WillSmith",
-        image:'c1.jpg',
-    },
-    {
-        fullname:"WillSmith",
-        image:'c1.jpg',
-    },
-    {
-        fullname:"WillSmith",
-        image:'c1.jpg',
-    },
-
+   
 ]

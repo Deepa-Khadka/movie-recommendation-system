@@ -74,7 +74,7 @@ if (user && (await bcrypt.compare(password, user.password))){
   });
 }else {
   res.status(401);
-  throw new error("Invalid email 0r password");
+  throw new Error("Invalid email 0r password");
 }
 
    
@@ -94,27 +94,38 @@ if (user && (await bcrypt.compare(password, user.password))){
       const user = await User.findById(req.user._id);
 
       // if user exists update user data and save it in DB
-      if(!user)  res.status(404).json(user)
+      if(user) {
+        user.fullName = fullName || user.fullName;
+        user.email = email || user.email;
+        user.image = image || user.image;
+
+      
       
         // user.fullName = fullName?.user.fullName;
         //user.email = email?.user.email;
         // user.image = image?.user.image;
         
-        user.fullName = fullName || user.fullName;
-        user.email = email || user.email;
-        user.image = image || user.image;
         
-        const updateUser = await user.save();
+        
+        const updatedUser = await user.save();
 
 
 
         //Send updated user data and token to client
-
-        res.status(200).json(updateUser);
-
-
-      
-     } catch (error) {
+res.json({
+  _id:updatedUser._id,
+  fullName: updatedUser.fullName,
+  email:updatedUser.email,
+  image:updatedUser.image,
+  isAdmin:updatedUser.isAdmin,
+  token: generateToken(updatedUser.id),
+});
+    }
+else{
+  res.status(404);
+  throw new Error("User not found");
+}
+  } catch (error) {
           res.status(400).json({message:error.message});
         }
       
