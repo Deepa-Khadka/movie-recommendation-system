@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef, useImperativeHandle } from "react";
+import React, {  useRef, forwardRef, useImperativeHandle } from "react";
 import Titles from "./../Titles";
 import { BsBookmarkStarFill, BsCaretLeft, BsCaretRight } from "react-icons/bs";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,8 +8,18 @@ import { Link } from "react-router-dom";
 import Rating from "../Stars";
 import Loader from "../Notification/Loader";
 import { Empty } from "../Notification/Empty";
+import { useDispatch, useSelector } from "react-redux";
+import { IfMovieLiked, LikeMovie } from "../../Context/Functionalities";
 
 const SwiperTop = forwardRef(({ movies }, ref) => {
+  const {isLoading} = useSelector((state) => state.userLikeMovie)
+  const  dispatch = useDispatch()
+  const {userInfo} = useSelector((state) => state.userLogin);
+  //if liked function
+
+  const isLiked =(movie) => {return IfMovieLiked(movie);
+  };
+
   const swiperRef = useRef(null);
 
   useImperativeHandle(ref, () => ({
@@ -35,16 +45,18 @@ const SwiperTop = forwardRef(({ movies }, ref) => {
         <SwiperSlide key={index}>
           <div className="p-4 h-rate hovered border border-border bg-dry rounded-lg overflow-hidden">
             <img
-              src={
-                movie?.titleImage
-                  ? `/images/movies/${movie.titleImage}`
-                  : "/images/user.png"
-              }
+             src={movie?.titleImage ? movie?.titleImage : "/images/user.png"}
               alt={movie.name}
               className="w-full h-full object-cover rounded-lg"
             />
             <div className="px-4  hoveres  gap-6 text-center absolute bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0">
-              <button className="w-12 h-12 flex-colo transition hover:bg-subMain rounded-full bg-white bg-opacity-30 text text-white">
+              <button 
+              onClick={() => LikeMovie(movie,dispatch,userInfo)}
+              disabled={isLiked(movie) || isLoading}
+              className={`w-12 h-12 flex-colo transition hover:bg-subMain rounded-full
+              ${
+                isLiked(movie) ? "bg-subMain" : "bg-white bg-opacity-30"}
+               text-white`}>
                 <FaHeart />
               </button>
               <Link
@@ -101,6 +113,7 @@ function TopRated({ movies, isLoading }) {
           <BsCaretLeft />
         </button>
         <button
+
           className="hover:bg-dry transition text-sm rounded w-8 h-8 flex-colo bg-subMain text-white"
           onClick={handleSlideNext}
         >

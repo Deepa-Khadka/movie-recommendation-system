@@ -59,7 +59,7 @@ const moviesSchema = new mongoose.Schema({
     },
     video:{
         type:String,
-       // required:true
+        required:true
     },
     rate:{
         type:Number,

@@ -17,7 +17,9 @@ const onDrop = useCallback(
     const file = new FormData()
     file.append("file", acceptedFiles[0]) 
    const data = await uploadImageservice(file, setLoading);
-   setImageUrl(data);
+  
+   setImageUrl(data.fileUrl);
+   
   },
   [setImageUrl]
 )
@@ -25,7 +27,6 @@ const onDrop = useCallback(
 
   const {getRootProps, getInputProps,isDragActive,isDragReject} = useDropzone({
     multiple: false,
-    maxSize:100000,
     onDrop,
   
   });

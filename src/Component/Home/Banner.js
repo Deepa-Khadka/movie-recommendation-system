@@ -6,8 +6,19 @@ import { Link } from 'react-router-dom'
 import { FaHeart } from 'react-icons/fa'
 import { RiMovie2Line } from 'react-icons/ri'
 import Loader from '../Notification/Loader';
+import { useDispatch, useSelector } from 'react-redux'
+import { IfMovieLiked, LikeMovie } from '../../Context/Functionalities'
 
 const Swipper = ({sameClass,movies}) => {
+  const {isLoading} = useSelector((state) => state.userLikeMovie)
+  const  dispatch = useDispatch()
+  const {userInfo} = useSelector((state) => state.userLogin);
+
+  //if liked function 
+
+  const isLiked = (movie) => {
+    return IfMovieLiked(movie)
+  }
   return(
     <Swiper 
     direction='vertical'
@@ -20,7 +31,7 @@ const Swipper = ({sameClass,movies}) => {
      className={sameClass}>
       {movies?.slice(0,6).map((movie, index) => (
           <SwiperSlide key={index} className='relative rounded overflow-hidden'>
-            <img src={movie?.image ? `/images/movies/${movie?.image}` : "/images/user.png"}
+            <img src={movie?.image ? movie?.image : "/images/user.png"}
             alt={movie?.image}
 
               className='w-full h-full object-cover'/>
@@ -35,7 +46,13 @@ const Swipper = ({sameClass,movies}) => {
                   <Link to={`/movie/${movie?._id}`} className='bg-subMain hover:text-main transitions text-white px-8 py-3 rounded font-medium sm:text-sm text-xs'>
                 Watch
                   </Link>
-                  <button className='bg-white hover:text-subMain transition text-white px-4 py-3 rounded text-sm bg-opacity-30'>
+
+                  <button 
+                  onClick={() => LikeMovie(movie,dispatch,userInfo)}
+                  disabled={isLiked(movie) || isLoading}
+                className={`bg-white
+                ${isLiked(movie)?  "text-subMain" :"text-white"}
+                 hover:text-subMain transition text-white px-4 py-3 rounded text-sm bg-opacity-30`}>
                     <FaHeart/>
                   </button>
                 </div>
@@ -59,7 +76,8 @@ function Banner({movies,isLoading}) {
 
 
     ):(
-      movies?.length > 0 ? <Swipper sameClass={sameClass} movies={movies}/>
+      movies?.length > 0 ? 
+      <Swipper sameClass={sameClass} movies={movies}/>
       : (
         <div className={sameClass}>
           <div className="flex-colo w-24 h-24 p-5  mb-4 rounded-full bg-dry text-subMain text-4xl ">

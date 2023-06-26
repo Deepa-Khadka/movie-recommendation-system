@@ -36,13 +36,11 @@ Uploadrouter.post("/", upload.single("file"), async(req,res) => {
     //if sucess
     blobStream.on("finish", () => {
         //get the public url
-        const publicUrl =`https://firebasestorage.googleapis.com/v0/b${storage.name}/o/${fileName}?alt=media`;
+        const publicUrl =`https://firebasestorage.googleapis.com/v0/b/${storage.name}/o/${fileName}?alt=media`;
         //return the file namevand its public url
 
-        res.status(200).json({fileName,fileUrl: publicUrl});
+        res.status(200).json({fileName, fileUrl: publicUrl});
 
-        //when there is no file
-        
     });
     blobStream.end(file.buffer);
    }else{

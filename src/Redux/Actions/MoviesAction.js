@@ -1,7 +1,8 @@
 import * as moviesConstants from "../Constants/MoviesConstants";
 import * as moviesAPIs from "../APIs/MoviesService";
 
-import { ErrorsAction } from "../Protection";
+import { ErrorsAction, tokenProtection } from "../Protection";
+import { toast } from "react-hot-toast";
 
 //get all movies action
 export const getAllMoviesAction =
@@ -78,3 +79,117 @@ export const getTopRatedMoviesAction = () => async (dispatch) => {
     ErrorsAction(error, dispatch, moviesConstants.MOVIE_TOP_RATED_FAIL);
   }
 };
+
+//review movie action
+export const reviewMovieAction = ({id, review}) => async (dispatch, getState) => {
+  try {
+    dispatch({type:moviesConstants.CREATE_REVIEW_REQUEST});
+    const response = await moviesAPIs.reviewMovieService(
+      tokenProtection(getState),
+      id,
+      review
+    );
+    dispatch({
+      type:moviesConstants.CREATE_REVIEW_SUCCESS,
+      payload:response,
+
+    });
+    toast.success("Review added SuccessFully");
+    dispatch({type:moviesConstants.CREATE_REVIEW_FAIL})
+    dispatch(getMovieByIdAction(id));
+  }catch(error) {
+    ErrorsAction(error,dispatch,moviesConstants.CREATE_REVIEW_FAIL);
+  }
+}
+
+//delete movie action
+export const deleteMovieAction =(id) => async(dispatch,getState) => {
+  try {
+    dispatch({type:moviesConstants.DELETE_MOVIE_REQUEST});
+    const response =await moviesAPIs.deleteMovieService(
+      tokenProtection(getState),
+      id
+    );
+    dispatch({
+      type:moviesConstants.DELETE_MOVIE_SUCCESS,
+      payload:response,
+    });
+    toast.success("Movies deleted Successfully");
+    dispatch(getAllMoviesAction({}));
+
+  } catch (error){
+    ErrorsAction(error,dispatch,moviesConstants.DELETE_MOVIE_FAIL)
+  }
+};
+
+
+//create movie action
+
+export const createMovieAction = (movie) => async(dispatch,getState)=>{
+  try{
+    dispatch({ type:moviesConstants.CREATE_MOVIE_REQUEST});
+    const response = await moviesAPIs.createMovieService(
+      tokenProtection(getState),
+      movie
+
+    );
+    dispatch({
+      type:moviesConstants.CREATE_MOVIE_SUCCESS,
+      payload:response,
+    });
+    toast.success("Movie Created SuccessFully");
+    dispatch(getAllMoviesAction({}));
+  } catch (error) {
+    ErrorsAction(error,dispatch,moviesConstants.CREATE_MOVIE_FAIL);
+  }
+};
+
+//Casts
+
+//add casts
+// add casts
+export const addCastAction = (cast) => async (dispatch, getState) => {
+  dispatch({ type: moviesConstants.ADD_CAST, payload: cast });
+  localStorage.setItem("cast", JSON.stringify(getState().casts.casts));
+};
+
+//remove cast
+export const removeCastAction = (id) => async (dispatch,getState) => {
+  dispatch({type:moviesConstants.DELETE_CAST, payload:id});
+  localStorage.setItem("casts" ,JSON.stringify(getState().casts.casts));
+}
+
+//update cast
+export const updateCastAction = (cast) => async (dispatch,getState) => {
+  dispatch({type:moviesConstants.EDIT_CAST,payload:cast});
+  localStorage.setItem("casts", JSON.stringify(getState().casts.casts));
+};
+
+//delete cast
+export const deleteAllCastsAction = () =>async (dispatch) =>{
+  dispatch({type:moviesConstants.RESET_CAST});
+  localStorage.removeItem("casts");
+
+};
+//update movie action
+
+export const updateMovieAction = (id,movie) => async (dispatch,getState)=> {
+  try{
+    dispatch({type:moviesConstants.UPDATE_MOVIE_REQUEST});
+    const response = await moviesAPIs.updateMovieService(
+      tokenProtection(getState),
+      id,
+      movie
+    );
+    dispatch({
+      type:moviesConstants.UPDATE_MOVIE_SUCCESS,
+      payload:response,
+    });
+    toast.success("Movie updated Successfully");
+    dispatch(getMovieByIdAction(id));
+    dispatch(deleteAllCastsAction())
+  }catch (error){
+    ErrorsAction(error,dispatch,moviesConstants.UPDATE_MOVIE_FAIL)
+  }
+}
+

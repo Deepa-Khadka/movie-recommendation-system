@@ -2,7 +2,6 @@ import React, { useMemo, useState } from "react";
 import Layout from "../../Layout/Layout";
 import Filter from "../../Component/Filter";
 import Movie from "../../Component/Movie";
-import { Movies } from "../../Data/MovieData";
 import { RiMovie2Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";

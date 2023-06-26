@@ -37,7 +37,7 @@ const loginService =async (user) => {
 //update profile Api call
 
 const updateProfileService = async (user,token) => {
-    console.log("in api call")
+
     const {data} = await Axios.put("/user", user,{
         headers: {
             Authorization: `Bearer ${token}`,
@@ -93,6 +93,18 @@ const deleteFavoriteMoviesService = async (token) => {
     })
     return data;
 };
+//like movie Api call
+const likeMovieService = async (movieId, token) => {
+    const {data} = await Axios.post(`/user/favorites/`, movieId,{
+        headers:{
+            Authorization:`Bearer ${token}`,
+
+        }
+
+    });
+    return data;
+
+}
 //********ADMIN APIS* */
 
 //admin get all user
@@ -125,6 +137,7 @@ export {registerService,
     deleteFavoriteMoviesService,
     getAllUserService,
     deleteUserService,
+    likeMovieService,
  };
 
 

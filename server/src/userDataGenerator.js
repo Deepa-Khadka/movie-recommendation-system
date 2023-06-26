@@ -37,7 +37,6 @@ const createUsers = async () => {
       console.log(error)
     }
   }
-  console.log('10 users created!')
   mongoose.connection.close()
 }
 

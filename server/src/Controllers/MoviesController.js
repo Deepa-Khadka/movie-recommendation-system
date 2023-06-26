@@ -137,7 +137,7 @@ const createMovieReview = asyncHandler(async (req,res) => {
       //if user already reviewed this movie send 400 error
       if (alreadyReviewed) {
         res.status(400);
-        throw new Error("you already reviewd this movie");
+        throw new Error("You Already Reviewed this Movie");
 
       }
       //else  create a new review

@@ -136,7 +136,7 @@ export const adminGetAllUsersReducer = (state = { users: [] }, action) => {
       return { isLoading: false, isError: action.payload };
     case userConstants.GET_ALL_USERS_RESET:
       return {
-        users :[],
+        users: [],
       };
     default:
       return state;
@@ -148,15 +148,33 @@ export const adminGetAllUsersReducer = (state = { users: [] }, action) => {
 export const adminDeleteUserReducer = (state = {}, action) => {
   switch (action.type) {
     case userConstants.DELETE_USER_REQUEST:
-      return {isLoading:true};
-      case userConstants.DELETE_USER_SUCCESS:
-        return{isLoading:false,isSuccess:true};
-        case userConstants.DELETE_USER_FAIL:
-          return {isLoading:false, isError:action.payload};
-          case userConstants.DELETE_USER_RESET:
-            return{};
-            default:
-              return state;
-
+      return { isLoading: true };
+    case userConstants.DELETE_USER_SUCCESS:
+      return { isLoading: false, isSuccess: true };
+    case userConstants.DELETE_USER_FAIL:
+      return { isLoading: false, isError: action.payload };
+    case userConstants.DELETE_USER_RESET:
+      return {};
+    default:
+      return state;
   }
-}
+};
+
+//user LIKE MOVIE
+
+export const userLikeMovieReducer = (state = {}, action) => {
+  switch (action.type) {
+    case userConstants.LIKE_MOVIE_REQUEST:
+      return { isLoading: true };
+    case userConstants.LIKE_MOVIE_SUCCESS:
+      return { isLoading: false, isSuccess: true };
+    case userConstants.LIKE_MOVIE_FAIL:
+      return { isLoading: false, isError: action.payload };
+    case userConstants.LIKE_MOVIE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+

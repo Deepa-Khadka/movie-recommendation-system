@@ -1,7 +1,6 @@
 import React from 'react'
 import Sidebar from './Sidebar';
 import Table2 from '../../../Component/Table2';
-import {User} from '../../../Data/UsersData';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { deleteUserAction, getAllUsersAction } from '../../../Redux/Actions/userActions';

@@ -3,8 +3,6 @@ import Sidebar from "./Sidebar";
 import Uploader from "../../../Component/Uploader";
 import { Input } from "../../../Component/UsedInputs";
 import { useDispatch, useSelector } from "react-redux";
-
-
 import { useForm } from "react-hook-form";
 import { ProfileValidation } from "../../../Component/Validation/UserValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,7 +14,7 @@ import { toast } from "react-hot-toast";
 function Profile() {
   const dispatch = useDispatch();
 
-  const { userInfo } = useSelector((state) => state.userLogin);
+const { userInfo } = useSelector((state) => state.userLogin);
 const [imageUrl, setImageUrl] = useState(userInfo ? userInfo.image : "");
 const {isLoading, isError, isSuccess} = useSelector((state) => state.userUpdateProfile);
 const { isLoading: deleteLoading, isError: deleteError } = useSelector((state) => state.userDeleteProfile);
@@ -71,9 +69,7 @@ const { isLoading: deleteLoading, isError: deleteError } = useSelector((state) =
             </div>
             {/*  image preview    */}
             <div className="col-span-2">
-              <Imagepreview
-              
-           image={imageUrl}
+              <Imagepreview image={imageUrl}
                name={ userInfo ? userInfo.fullName : "screenplay" } />
             </div>
           </div>

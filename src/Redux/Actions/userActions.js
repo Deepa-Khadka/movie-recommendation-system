@@ -38,26 +38,55 @@ const logoutAction = () => (dispatch) => {
 
 //update profile action
 const updateProfileAction = (user) => async (dispatch, getState) => {
-    try {
-      dispatch({ type: userConstants.USER_UPDATE_PROFILE_REQUEST });
-      const response = await userApi.updateProfileService(
-        user,
-        tokenProtection(getState)
-      );
-      dispatch({
-        type: userConstants.USER_UPDATE_PROFILE_SUCCESS,
-        payload: response,
-      });
-      toast.success("Profile Updated");
-      dispatch({
-        type: userConstants.USER_LOGIN_SUCCESS,
-        payload: response,
-      });
-    } catch (error) {
-      console.log("catch stm")
-      ErrorsAction(error, dispatch, userConstants.USER_UPDATE_PROFILE_FAIL);
-    }
-  };
+  try {
+    dispatch({ type: userConstants.USER_UPDATE_PROFILE_REQUEST });
+
+    // Convert the image value to a string if it exists
+    console.log('eta aaunxa?');
+    const image = user.image ? String(user.image) : "";
+
+    const updatedUser = { ...user, image }; // Include the updated image value in the user object
+
+    const response = await userApi.updateProfileService(
+      updatedUser,
+      tokenProtection(getState)
+    );
+    dispatch({
+      type: userConstants.USER_UPDATE_PROFILE_SUCCESS,
+      payload: response,
+    });
+    toast.success("Profile Updated");
+    dispatch({
+      type: userConstants.USER_LOGIN_SUCCESS,
+      payload: response,
+    });
+  } catch (error) {
+    console.log("catch stm");
+    ErrorsAction(error, dispatch, userConstants.USER_UPDATE_PROFILE_FAIL);
+  }
+};
+// const updateProfileAction = (user) => async (dispatch, getState) => {
+//   try {
+//     dispatch({ type: userConstants.USER_UPDATE_PROFILE_REQUEST });
+//     const response = await userApi.updateProfileService(
+//       user,
+//       tokenProtection(getState)
+//     );
+//     dispatch({
+//       type: userConstants.USER_UPDATE_PROFILE_SUCCESS,
+//       payload: response,
+//     });
+//     toast.success("Profile Updated");
+//     dispatch({
+//       type: userConstants.USER_LOGIN_SUCCESS,
+//       payload: response,
+//     });
+//   } catch (error) {
+   
+//     ErrorsAction(error, dispatch, userConstants.USER_UPDATE_PROFILE_FAIL);
+//   }
+// };
+
 
 
   //delete profile action
@@ -153,6 +182,29 @@ const updateProfileAction = (user) => async (dispatch, getState) => {
       }
     };
 
+//user like movie action
+const likeMovieAction = (movieId) => async (dispatch,getState) => {
+try{
+  dispatch({type:userConstants.LIKE_MOVIE_REQUEST});
+  const response = await userApi.likeMovieService(
+    movieId,
+    tokenProtection(getState)
+  );
+  dispatch({
+    type:userConstants.LIKE_MOVIE_SUCCESS,
+    payload:response,
+  });
+  toast.success("Added to favourites");
+  dispatch(getFavoriteMoviesAction());
+
+}catch(error) {
+
+  ErrorsAction(error,dispatch,userConstants.LIKE_MOVIE_FAIL);
+}
+};
+
+
+
 
   
 export {
@@ -166,4 +218,5 @@ export {
    deleteFavoriteMoviesAction,
    getAllUsersAction,
    deleteUserAction,
+   likeMovieAction,
    };

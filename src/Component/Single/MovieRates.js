@@ -1,70 +1,149 @@
-import { React, useState } from "react";
+import { React } from "react";
 import Titles from "../Titles";
 import { BsBookmarkStarFill } from "react-icons/bs";
 import { Select } from "../UsedInputs";
 import Rating from "../Stars";
 import { Message } from "../UsedInputs";
 import {Empty} from "../Notification/Empty"
-import { User } from "../../Data/UsersData";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ReviewValidation } from "../Validation/MovieValidation";
+import { useEffect } from "react";
+import { InlineError } from "../Notification/Error";
+import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { reviewMovieAction } from "../../Redux/Actions/MoviesAction";
+
+
+const Ratings = [
+  {
+    title: "0 -Poor",
+    value: 0,
+  },
+  {
+    title: "1 -Fair",
+    value: 1,
+  },
+  {
+    title: "2 -Good",
+    value: 2,
+  },
+  {
+    title: "3 -Very Good",
+    value: 3,
+  },
+  {
+    title: "4 -Excellent",
+    value: 4,
+  },
+  {
+    title: "5 -Masterpiece",
+    value: 5,
+  },
+];
 
 function MovieRates({ movie }) {
-  const Ratings = [
-    {
-      title: "0 -Poor",
-      value: 0,
-    },
-    {
-      title: "1 -Fair",
-      value: 1,
-    },
-    {
-      title: "2 -Good",
-      value: 2,
-    },
-    {
-      title: "3 -Very Good",
-      value: 3,
-    },
-    {
-      title: "4 -Excellent",
-      value: 4,
-    },
-    {
-      title: "5 -Masterpiece",
-      value: 5,
-    },
-  ];
-  const [rating, setRating] = useState();
+const dispatch = useDispatch();
+
+ //use Selector
+ const { isLoading, isError} = useSelector( (state) => state.createReview);
+ const { userInfo} = useSelector( (state) => state.userLogin);
+
+ //validate review
+ const {
+  register,
+  handleSubmit,
+  watch,
+  formState: { errors},
+} = useForm({
+ resolver: yupResolver(ReviewValidation),
+})
+
+//on submit 
+const onSubmit = (data) => {
+
+dispatch(
+  reviewMovieAction({
+  id: movie?._id,
+ review: {...data},
+}));
+
+ };
+useEffect(() => {
+  if(isError) {
+    toast.error(isError);
+    dispatch({type:"CREATE_REVIEW_RESET"})
+
+  }
+}, [isError,dispatch]);
   return (
     <div className="my-12">
       <Titles title="Review" Icon={BsBookmarkStarFill} />
       <div className="mt-10 xl:grid flex-col grid-cols-5 gap-12 bg-dry xs:p-10 py-10 px-2 sm:p-20 rounded">
         {/* Write review */}
 
-        <div className="xl:col-span-2 w-full flex flex-col gap-8">
+        <form onSubmit={ 
+          handleSubmit(onSubmit)}
+        className="xl:col-span-2 w-full flex flex-col gap-8">
           <h3 className="text-2xl  text-text font-semibold">
             Review"{movie?.name}"
           </h3>
-          <p className="text-sm leading-7 font-medium text-border">
+          {/* <p className="text-sm leading-7 font-medium text-border">
             Write a review for this movie.IT will be posted on this page.
-          </p>
+          </p> */}
           <div className="text-sm  w-full">
             <Select
               label="Select Rating"
               option={Ratings}
-              onChange={(e) => setRating(e.target.value)}
+              name="rating"
+              register={{...register("rating")}}
             />
 
             <div className="flex mt-4 text-lg gap-2 text-star">
-              <Rating value={rating} />
+              <Rating value={watch("rating", false)} />
             </div>
+            {errors.rating &&<InlineError text={errors.rating.message}/>}
+        
           </div>
-          <Message label="Message" placeholder="MAke it Short and Sweet" />
+         {/*message */}
+          <div className="w-full">
+            <Message
+            name="comment"
+            register={{...register("comment")}}
+           label="Message" 
+           placeholder="Make it Short and Sweet" />
+           {errors.comment && <InlineError text={errors.comment.message}/> }   
+          </div>
+            {/* Submit*/}
+            {
+              userInfo ? (
+                <button 
+                disabled={isLoading}
+                type="submit"
+                className="bg-subMain text-white py-4 w-full flex-colo rounded">
+                  { 
+                    isLoading ? "Loading..." : "Submit"
 
-          <button className="bg-subMain text-white py-3 px-4 items-center  flex-col rounded">
-            Submit
-          </button>
-        </div>
+                  }
+               
+                </button>
+
+              )
+              :(
+                <Link
+                to="/login"
+                type="submit"
+                className="bg-main border border-dashed border-border text-subMain py-4 px-4 flex items-center justify-center flex-col rounded"
+              >
+                Login to review this movie
+              </Link>
+              
+
+              )
+            }
+         
+        </form>
         {/*  REVIWERS*/}
         <div className="col-span-3 flex flex-col gap-6">
           <h3 className="text-xl text-text font-semibold">Reviews({movie?.numberOfReviews})</h3>
@@ -76,19 +155,19 @@ function MovieRates({ movie }) {
                     src={review?.userImage 
                       ?review.userImage : 
                       "/images/ScreenPlay.png"}
-                    alt={review?.fullName}
+                    alt={review?.userName}
                     className="w-full h-24 rounded-lg object-cover"
                   />
                 </div>
                 <div className="col-span-7 flex flex-col gap-2">
-                  <h2>{review?.fullName}</h2>
+                  <h2>{review?.userName}</h2>
                   <p className="text-xs leading-6 font-medium text-text">
                     {review?.comment}
                   </p>
                 </div>
                 {/*   RATES  */}
                 <div className="col-span-3 flex-rows border-l border-border text-xs gap-1 text-star">
-                  <Rating value={review?. rating} />
+                  <Rating value={review?.rating} />
                 </div>
               </div>
             )): <Empty message={`Be first to rate "${movie?.name}"`}/>

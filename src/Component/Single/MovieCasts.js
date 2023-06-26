@@ -48,7 +48,7 @@ function MovieCasts({movie}) {
                 <SwiperSlide key={cast?._id}>
               <div className='w-full p-3 italic text-xs text-text rounded flex-col bg-dry border-gray-800'>
               <img
-                src={cast?.image ? `/images/movies/${cast?.image}` : "/images/movies/user.png"}
+                src={cast?.image ? cast?.image : "/images/user.png"}
                 alt={cast?.name}
                 className='w-full h-64 object-cover rounded mb-4 '
               />

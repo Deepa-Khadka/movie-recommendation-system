@@ -24,34 +24,34 @@ function Footer() {
         },
       ]
  },
- {
-  title:'Top Categories',
-  links:[
-    {
-      name:'Action',
-      link:'#'
-    },
-    {
-      name:'Romance',
-      link:'#'
-    },
-    {
-      name:'Drama',
-      link:'#'
-    },
-    {
-      name:'Historical',
-      link:'#'
-    },
-  ]
-},
+//  {
+//   title:'Top Categories',
+//   links:[
+//     {
+//       name:'Action',
+//       link:'#'
+//     },
+//     {
+//       name:'Romance',
+//       link:'#'
+//     },
+//     {
+//       name:'Drama',
+//       link:'#'
+//     },
+//     {
+//       name:'Historical',
+//       link:'#'
+//     },
+//   ]
+// },
 {
   title:'My Account',
   links:[
    
     {
       name:'My Favourite',
-      link:'/favourite'
+      link:'/favorites'
     },
     {
       name:'Profile',

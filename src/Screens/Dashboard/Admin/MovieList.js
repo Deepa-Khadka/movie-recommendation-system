@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Table from "../../../Component/Table";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMoviesAction } from "../../../Redux/Actions/MoviesAction";
+import { deleteMovieAction, getAllMoviesAction } from "../../../Redux/Actions/MoviesAction";
 import { toast } from "react-hot-toast";
 import Loader from "../../../Component/Notification/Loader";
 import { Empty } from "../../../Component/Notification/Empty";
@@ -15,18 +15,31 @@ function MoviesList() {
   const dispatch = useDispatch();
   const sameClass =
     "text-white py-2 px-4 rounded font-semibold border-2 border-subMain hover:bg-subMain mr-2";
+    //all movies
   const { isLoading, isError, movies, pages, page } = useSelector(
     (state) => state.getAllMovies
   );
+  //delete
+  const { isLoading:deleteLoading, isError:deleteError} = useSelector(
+    (state) => state.deleteMovie
+  );
+
+  //delete movie handler
+  const deleteMovieHandler = (id) =>{
+    window.confirm("Are you sure want to delete this movie?")&&
+    dispatch(deleteMovieAction(id));
+  };
+
+//useeffect
   useEffect(() => {
-    dispatch(
-      getAllMoviesAction({
-        if(isError) {
-          toast.error(isError);
-        },
-      })
-    );
-  }, [dispatch, isError]);
+   //error
+        if(isError || deleteError ) {
+          toast.error(isError || deleteError );
+        }
+        dispatch(getAllMoviesAction({}));
+  
+  }, [dispatch, isError,deleteError ]);
+
   //pagination  next and prev pages
   const nextpage = () => {
     dispatch(
@@ -47,15 +60,18 @@ function MoviesList() {
       <div className="flex flex-col gap-6">
         <div className="flex-btn gap-2">
           <h2 className="text-xl font-bold"> Movies List</h2>
-          <button className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded">
+       
+          {/* <button className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded">
             Delete All
-          </button>
+          </button> */}
         </div>
         {isLoading ? (
           <Loader />
-        ) : movies.length > 0 ? (
+        ) : movies?.length > 0 ? (
           <>
-            <Table data={movies} admin={true} />
+            <Table data={movies}
+             admin={true}
+             onDeleteHandler={deleteMovieHandler} />
             <div className="w-full flex-rows gap-0 md:my-20 my-10">
               <button
                 onClick={prevpage}

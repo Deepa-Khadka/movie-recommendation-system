@@ -23,18 +23,37 @@ import AddMovie from "./Screens/Dashboard/Admin/AddMovie";
 import ScrollOnTop from "./ScrollOnTop";
 import DrawerContext from "./Context/DrawerContext";
 import { AdminProtectedRouter, ProtectedRouter } from "./ProtectedRouter";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllCategoriesAction } from "./Redux/Actions/CategoriesAction";
 import { getAllMoviesAction } from "./Redux/Actions/MoviesAction";
+import { getFavoriteMoviesAction } from "./Redux/Actions/userActions";
+import { toast } from "react-hot-toast";
+import EditMovie from "./Screens/Dashboard/Admin/EditMovie";
+
 
 function App() {
   AOS.init();
   const dispatch =useDispatch();
+  const {userInfo} = useSelector((state) => state.userLogin);
+  const {isError, isSuccess} = useSelector((state) => state.userGetFavoriteMovies);
+  const {isError:catError} = useSelector((state) => state.categoryGetAll);
+
   useEffect(() => {
     dispatch(getAllCategoriesAction());
     dispatch(getAllMoviesAction({}));
-  }, [dispatch]); 
+    if(userInfo) {
+      dispatch(getFavoriteMoviesAction())
+    }
+    if(isError || catError){
+      toast.error(isError || catError)
+      dispatch({type:"LIKE_MOVIE_RESET"});
+    }
+    if(isSuccess){
+   
+      dispatch({type :"LIKE_MOVIE_RESET"})
+    }
+  }, [dispatch,userInfo,isError,catError,isSuccess]); 
 
   return (
     <>
@@ -67,6 +86,8 @@ function App() {
           <Route path="/categories" element={<Categories />} />
           <Route path="/users" element={<Users />} />
           <Route path="/addmovie" element={<AddMovie />} />
+          <Route path="/edit/:id" element={<EditMovie/>} />
+
 </Route>
 </Route>
         </Routes>
