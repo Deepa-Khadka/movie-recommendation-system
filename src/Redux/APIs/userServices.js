@@ -29,6 +29,7 @@ const loginService =async (user) => {
     const {data} = await Axios.post("/user/login", user);
     if (data) {
         localStorage.setItem("userInfo",JSON.stringify(data));
+        sessionStorage.setItem("user",JSON.stringify(data))
     }
     return data;
 }
